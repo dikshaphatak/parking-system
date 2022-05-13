@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="20220414-create_vehicle" author="diksha">
+        <createTable tableName="vehicle">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="activeflag" type="tinyint(1)" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastupdated" type="datetime" defaultValueComputed="NOW() ON UPDATE NOW()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int(10)" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vehicle_number" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner_name" type="varchar(30)"/>
+            <column name="contact_number" type="varchar(15)"/>
+            <column name="park_in_time" type="datetime" defaultValue="NOW()"/>
+            <column name="park_out_time" type="datetime" />
+            <column name="parking_charge" type="double"/>
+            <column name="slot_id" type="bigint(10)">
+                <constraints foreignKeyName="fk_vehicle_slot_number"
+                             referencedTableName="parking_slot"
+                             referencedColumnNames="id"
+                            nullable="false"/>
+            </column>
+            <column name="payment_mode" type="varchar(20)"/>
+
+
+        </createTable>
+<!--&lt;!&ndash;foreign key constraint for vehicle entity&ndash;&gt;-->
+<!--        <addForeignKeyConstraint  baseColumnNames="slot_id"-->
+<!--                                  baseTableName="vehicle"-->
+<!--                                  constraintName="fk_vehicle_slot_id"-->
+<!--                                  onUpdate="CASCADE"-->
+<!--                                  referencedColumnNames="id"-->
+<!--                                  referencedTableName="parking_slot"/>-->
+    </changeSet>
+</databaseChangeLog>
